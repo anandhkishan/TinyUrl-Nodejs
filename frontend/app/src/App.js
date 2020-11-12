@@ -1,41 +1,57 @@
-import React from 'react';
-import './App.css';
-
+import React from "react";
+import "./App.css";
+import axios from "axios";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-    this.createTinyUrl = this.createTinyUrl.bind(this);
-    this.handleLongUrlChange = this.handleLongUrlChange.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = { longURL: "" };
+
+    this.handleLongURL = this.handleLongURL.bind(this);
+    this.postLongURL = this.postLongURL.bind(this);
   }
 
-  handleLongUrlChange(event){
-    this.setState({longUrl:event.target.value});
+  handleLongURL(event) {
+    this.setState({ longURL: event.target.value });
   }
 
-  createTinyUrl(event) {
+  postLongURL(event) {
+    console.log(this.state.longURL);
+    axios
+      .post(`http://localhost:5000/create`, {
+        long_url: this.state.longURL,
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ short_url: res.data.short_url });
+        console.log(this.state);
+      });
     event.preventDefault();
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "http://localhost:5000" },
-      body: JSON.stringify({ url:this.state.longUrl})
-  };
-    
-    fetch('http://localhost:5000/create',requestOptions)
-    .then(result=>result.json())
-    .then(items=>this.setState({items}));
   }
-
   render() {
     return (
-      <form onSubmit={this.createTinyUrl}>
-        <label htmlFor="longUrl">Enter Your URL</label>
-        <input id="longUrl" name="longUrl" value={this.state.longUrl} onChange={this.handleLongUrlChange} type="text" />
-        <button>Create Short URL!</button>
-      </form>
+      <div className="urlform">
+        <form onSubmit={this.postLongURL}>
+          <label htmlFor="longUrl">Enter Your URL</label>
+          <input
+            id="longUrl"
+            name="longUrl"
+            value={this.state.longURL}
+            onChange={this.handleLongURL}
+            type="text"
+          />
+          <button>Create Short URL!</button>
+        </form>
+        {this.state.short_url !== undefined && (
+          <div>
+            <p>{this.state.short_url}</p>
+            <p className="monospace">
+              Please copy and navigate to the above url to access your long URL
+              :) Thank you
+            </p>
+          </div>
+        )}
+      </div>
     );
   }
 }
