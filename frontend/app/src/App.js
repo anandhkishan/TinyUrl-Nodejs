@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 
+const corsFreeURL = "http://localhost:7000/";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class App extends React.Component {
   postLongURL(event) {
     console.log(this.state.longURL);
     axios
-      .post(`http://localhost:5000/create`, {
+      .post(`${corsFreeURL}http://localhost:5000/create`, {
         long_url: this.state.longURL,
       })
       .then((res) => {
