@@ -34,15 +34,16 @@ class App extends React.Component {
     return (
       <div className="urlform">
         <form onSubmit={this.postLongURL}>
-          <label htmlFor="longUrl">Enter Your URL</label>
+          <label htmlFor="longUrl">Enter Your URL </label>
           <input
+            className="inputInForm"
             id="longUrl"
             name="longUrl"
             value={this.state.longURL}
             onChange={this.handleLongURL}
             type="text"
           />
-          <button>Create Short URL!</button>
+          <button> Create Short URL! </button>
         </form>
         {this.state.short_url !== undefined && (
           <div>

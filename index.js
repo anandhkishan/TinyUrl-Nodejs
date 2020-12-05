@@ -1,9 +1,10 @@
 const helper = require("./helper");
 const express = require("express");
-const app = express();
 const bodyParser = require("body-parser");
 const { response } = require("express");
+
 const port = 5000;
+const app = express();
 
 // const hash = md5("example.com/djfnjdvf/dfvdfvdfv1231231231231")
 // console.log(hash);
@@ -20,6 +21,11 @@ const port = 5000;
 // console.log(decimalVal);
 
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 /*
     Sample Request Payload:
@@ -49,7 +55,7 @@ app.post("/create", (req, res) => {
     });
 });
 
-app.get("/fetch_long_url", (req, res) => {
+app.get("/aurl", (req, res) => {
   console.log(req.query);
   const shortUrl = req.query.url;
   helper
@@ -64,6 +70,12 @@ app.get("/fetch_long_url", (req, res) => {
     });
 });
 
+app.get("/status", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.json({ status: "ok" });
+  res.status(200);
+  res.end();
+});
 app.listen(port, () => {
   console.log(`Started the server and listening in port ${port}!!!`);
 });
