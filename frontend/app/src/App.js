@@ -1,8 +1,11 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
+const backendPort = process.env.BACKEND_PORT || 5000;
+const backendHost = process.env.BACKEND_HOST || "localhost";
 
-const corsFreeURL = "http://localhost:7000/";
+const backendURL = `http://${backendHost}:${backendPort}`;
+// const corsFreeURL = "http://localhost:7000/";
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +23,8 @@ class App extends React.Component {
   postLongURL(event) {
     console.log(this.state.longURL);
     axios
-      .post(`${corsFreeURL}http://localhost:5000/create`, {
+      // .post(`${corsFreeURL}http://localhost:5000/create`, {
+      .post(backendURL, {
         long_url: this.state.longURL,
       })
       .then((res) => {

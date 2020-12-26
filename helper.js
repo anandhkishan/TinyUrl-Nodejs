@@ -52,7 +52,8 @@ const convertToShortUrlAndSave = (longUrl) => {
 const getLongUrlByShortUrl = (shortUrl) => {
   return new Promise((resolve, reject) => {
     const client = new Client({
-      host: "localhost",
+      host: "postgres",
+      user: "unicorn_user",
       database: "tiny_url",
       port: 5432,
     });
