@@ -1,5 +1,5 @@
-node index.js
+pm2 start index.js
 
 cd frontend/app
 echo $(pwd)
-npm start
+pm2 start npm -- start
