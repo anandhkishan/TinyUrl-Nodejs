@@ -1,11 +1,12 @@
 const helper = require("./helper");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const { response } = require("express");
 
 const port = 5000;
 const app = express();
-
+app.use(cors());
 // const hash = md5("example.com/djfnjdvf/dfvdfvdfv1231231231231")
 // console.log(hash);
 // console.log(hash.length);
