@@ -41,6 +41,7 @@ const convertToShortUrlAndSave = (longUrl) => {
     const shortUrl = tinyUrlPrefix + shortenedRandomText(longUrl);
     const client = new Client({
       host: dbHost,
+      user: dbUser,
       database: dbName,
       port: dbport,
     });
