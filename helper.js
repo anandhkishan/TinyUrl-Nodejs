@@ -1,3 +1,8 @@
+const dbHost = process.env.DATABASE_HOST || "postgres";
+const dbport = process.env.DATABASE_PORT || "5432";
+const dbUser = process.env.DATABASE_USER || "postgres";
+const dbName = process.env.DATABASE_NAME || "tiny_url";
+
 const { Client } = require("pg");
 const md5 = require("md5");
 //SQL queries
@@ -52,10 +57,10 @@ const convertToShortUrlAndSave = (longUrl) => {
 const getLongUrlByShortUrl = (shortUrl) => {
   return new Promise((resolve, reject) => {
     const client = new Client({
-      host: "postgres",
-      user: "unicorn_user",
-      database: "tiny_url",
-      port: 5432,
+      host: dbHost,
+      user: dbUser,
+      database: dbName,
+      port: dbport,
     });
     client.connect();
     client.query(GET_LONG_URL_BY_TINY_URL, [shortUrl], (err, res) => {
