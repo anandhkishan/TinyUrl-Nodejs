@@ -34,12 +34,15 @@ const shortenedRandomText = (longUrl) => {
 
 const convertToShortUrlAndSave = (longUrl) => {
   return new Promise((resolve, reject) => {
+    console.log(
+      "Db values: " + dbHost + ", " + dbName + ", " + dbUser + ", " + dbport
+    );
     const tinyUrlPrefix = "https://aktiny.com/aurl/";
     const shortUrl = tinyUrlPrefix + shortenedRandomText(longUrl);
     const client = new Client({
-      host: "localhost",
-      database: "tiny_url",
-      port: 5432,
+      host: dbHost,
+      database: dbName,
+      port: dbport,
     });
     client.connect();
     client.query(CREATE_TINY_URL_ENTRY, [longUrl, shortUrl], (err, res) => {
@@ -56,6 +59,10 @@ const convertToShortUrlAndSave = (longUrl) => {
 
 const getLongUrlByShortUrl = (shortUrl) => {
   return new Promise((resolve, reject) => {
+    console.log(
+      "Db values: " + dbHost + ", " + dbName + ", " + dbUser + ", " + dbport
+    );
+
     const client = new Client({
       host: dbHost,
       user: dbUser,
