@@ -6,7 +6,7 @@ require("dotenv").config();
 const { response } = require("express");
 const BACKEND_PREFIX = "/app";
 const CREATE_PATH = BACKEND_PREFIX + "/create";
-const STATUS_CHECK = BACKEND_PREFIX + "/status";
+const STATUS_CHECK = "/status";
 
 const port = 5000;
 const app = express();
