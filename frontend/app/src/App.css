@@ -4,8 +4,13 @@
   margin-top: 25%;
   width: 50%;
   text-align: center;
-  background-color: rgb(232, 233, 178);
   padding: 20px;
+}
+
+p {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .inputInForm {
@@ -13,7 +18,7 @@
 }
 
 body {
-  background-color: rgb(178, 186, 189);
+  background-color: rgb(232, 233, 178);
 }
 
 .monospace {
