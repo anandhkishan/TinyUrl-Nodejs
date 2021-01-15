@@ -2,7 +2,11 @@ const helper = require("./helper");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require("dotenv").config();
 const { response } = require("express");
+const BACKEND_PREFIX = "/app";
+const CREATE_PATH = BACKEND_PREFIX + "/create";
+const STATUS_CHECK = BACKEND_PREFIX + "/status";
 
 const port = 5000;
 const app = express();
@@ -39,7 +43,7 @@ app.use((req, res, next) => {
         "short_url":"https://s.com"
     }
 */
-app.post("/create", (req, res) => {
+app.post(CREATE_PATH, (req, res) => {
   console.log("Got the request", req.body);
   const reqBody = req.body;
   const longUrl = reqBody["long_url"];
@@ -48,7 +52,9 @@ app.post("/create", (req, res) => {
     .convertToShortUrlAndSave(longUrl)
     .then((response) => {
       res.setHeader("Content-Type", "application/json");
-      res.json({ short_url: response["short_url"] });
+      const shortURL =
+        process.env.HOST + BACKEND_PREFIX + "/" + response["short_url"];
+      res.json({ short_url: shortURL });
       res.end();
     })
     .catch(() => {
@@ -56,14 +62,14 @@ app.post("/create", (req, res) => {
     });
 });
 
-app.get("/aurl", (req, res) => {
+app.get(BACKEND_PREFIX + "/*", (req, res) => {
   console.log(req.query);
-  const shortUrl = req.query.url;
+  const shortUrl = req.path.split("/app/")[1];
   helper
     .getLongUrlByShortUrl(shortUrl)
     .then((response) => {
-      res.setHeader("Content-Type", "application/json");
-      res.json({ url: response["long_url"] });
+      res.setHeader("location", response["long_url"]);
+      res.status(302);
       res.end();
     })
     .catch(() => {
@@ -71,7 +77,7 @@ app.get("/aurl", (req, res) => {
     });
 });
 
-app.get("/status", (req, res) => {
+app.get(STATUS_CHECK, (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.json({ status: "ok" });
   res.status(200);

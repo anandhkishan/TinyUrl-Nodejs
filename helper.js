@@ -1,9 +1,3 @@
-const dbHost = process.env.DATABASE_HOST || "postgres";
-const dbport = process.env.DATABASE_PORT || "5432";
-const dbUser = process.env.DATABASE_USER || "postgres";
-const dbName = process.env.DATABASE_NAME || "tiny_url";
-const dbPassword = process.env.DATABASE_PASS || "postgres";
-
 const { Client } = require("pg");
 const md5 = require("md5");
 //SQL queries
@@ -35,11 +29,16 @@ const shortenedRandomText = (longUrl) => {
 
 const convertToShortUrlAndSave = (longUrl) => {
   return new Promise((resolve, reject) => {
+    const dbHost = process.env.DATABASE_HOST || "postgres";
+    const dbport = process.env.DATABASE_PORT || "5432";
+    const dbUser = process.env.DATABASE_USER || "postgres";
+    const dbName = process.env.DATABASE_NAME || "tiny_url";
+    const dbPassword = process.env.DATABASE_PASS || "postgres";
     console.log(
       "Db values: " + dbHost + ", " + dbName + ", " + dbUser + ", " + dbport
     );
-    const tinyUrlPrefix = "https://aktiny.com/aurl/";
-    const shortUrl = tinyUrlPrefix + shortenedRandomText(longUrl);
+
+    const shortText = shortenedRandomText(longUrl);
     const client = new Client({
       host: dbHost,
       user: dbUser,
@@ -48,7 +47,7 @@ const convertToShortUrlAndSave = (longUrl) => {
       password: dbPassword,
     });
     client.connect();
-    client.query(CREATE_TINY_URL_ENTRY, [longUrl, shortUrl], (err, res) => {
+    client.query(CREATE_TINY_URL_ENTRY, [longUrl, shortText], (err, res) => {
       if (err) {
         reject();
       } else {
@@ -56,12 +55,16 @@ const convertToShortUrlAndSave = (longUrl) => {
       }
       client.end();
     });
-    return tinyUrlPrefix;
   });
 };
 
 const getLongUrlByShortUrl = (shortUrl) => {
   return new Promise((resolve, reject) => {
+    const dbHost = process.env.DATABASE_HOST || "postgres";
+    const dbport = process.env.DATABASE_PORT || "5432";
+    const dbUser = process.env.DATABASE_USER || "postgres";
+    const dbName = process.env.DATABASE_NAME || "tiny_url";
+    const dbPassword = process.env.DATABASE_PASS || "postgres";
     console.log(
       "Db values: " + dbHost + ", " + dbName + ", " + dbUser + ", " + dbport
     );

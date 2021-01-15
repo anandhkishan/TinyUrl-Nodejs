@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
-const backendPort = process.env.BACKEND_PORT || 5000;
-const backendHost = process.env.BACKEND_HOST || "localhost";
-
-const backendURL = `http://${backendHost}:${backendPort}/create`;
+const backendPort = process.env.REACT_APP_BACKEND_PORT || 5000;
+const backendHost = process.env.REACT_APP_BACKEND_HOST || "localhost";
+const backendURL = `http://${backendHost}:${backendPort}/app/create`;
 // const corsFreeURL = "http://localhost:7000/";
 
 class App extends React.Component {
