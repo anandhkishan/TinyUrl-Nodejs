@@ -33,4 +33,4 @@ After installing postgres, do the following:
     short_url text);
     ```
   
-[website link](tiny.anandhkishan.com)
+[website link](http://tiny.anandhkishan.com)
